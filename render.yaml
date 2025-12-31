@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: astrotech-backend
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: ORACLE_MODE
+        sync: false
+        placeholder: "llm o mock"
+      - key: GROQ_API_KEY
+        sync: false
+        placeholder: "Tu API Key de Groq"
+      - key: GROQ_MODEL
+        sync: false
+        placeholder: "qwen/qwen3-32b"
+      - key: GROQ_TIMEOUT_MS
+        value: "12000"

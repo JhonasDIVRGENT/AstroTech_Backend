@@ -2,7 +2,7 @@
 
 **Backend Node.js + Express para predicciones tecnológicas 2026 basadas en signos zodiacales.**
 
-Desarrollado por **JhonasDev** | Fase 1: Mock Implementation
+Desarrollado por **JhonasDev** | **Fase 3: Groq AI Integration** ✨
 
 ---
 
@@ -34,9 +34,38 @@ cp .env.example .env
 Crea un archivo `.env` en la raíz del proyecto (puedes copiar `.env.example`):
 
 ```env
+# Servidor
 PORT=3000
 NODE_ENV=development
+
+# Modo del oráculo: "mock" o "llm"
+ORACLE_MODE=mock
+
+# Groq API (solo si ORACLE_MODE=llm)
+GROQ_API_KEY=tu_api_key_aqui
+GROQ_MODEL=llama-3.3-70b-versatile
+GROQ_TIMEOUT_MS=12000
 ```
+
+### Modos de Operación
+
+**Modo MOCK** (por defecto):
+- No requiere API key
+- Usa datos predefinidos
+- Respuesta instantánea
+- `meta.mode: "mock"`
+
+**Modo LLM** (con Groq AI):
+- Requiere `GROQ_API_KEY` válida
+- Genera predicciones únicas con IA
+- Fallback automático a mock si falla
+- `meta.mode: "llm"` o `"mock_fallback"`
+
+**Obtener API Key de Groq:**
+1. Visita [https://console.groq.com/keys](https://console.groq.com/keys)
+2. Crea una cuenta gratuita
+3. Genera una API key
+4. Agrégala a tu archivo `.env`
 
 ---
 
@@ -162,7 +191,9 @@ Genera una predicción tecnológica personalizada basada en el signo zodiacal.
 GET http://localhost:3000/health
 ```
 
-### Predicción para Aries
+### Modo MOCK (default)
+
+**Predicción para Aries:**
 ```
 POST http://localhost:3000/api/oracle
 Content-Type: application/json
@@ -171,8 +202,9 @@ Content-Type: application/json
   "sign": "aries"
 }
 ```
+**Response:** `meta.mode: "mock"`
 
-### Predicción con acentos
+**Predicción con acentos:**
 ```
 POST http://localhost:3000/api/oracle
 Content-Type: application/json
@@ -181,6 +213,59 @@ Content-Type: application/json
   "sign": "géminis"
 }
 ```
+
+### Modo LLM (con Groq AI)
+
+**1. Configurar variables de entorno:**
+```env
+ORACLE_MODE=llm
+GROQ_API_KEY=tu_api_key_aqui
+```
+
+**2. Reiniciar servidor:**
+```bash
+npm run dev
+```
+
+**3. Probar predicción con IA:**
+```
+POST http://localhost:3000/api/oracle
+Content-Type: application/json
+
+{
+  "sign": "aries"
+}
+```
+**Response:** `meta.mode: "llm"` (predicción generada por IA)
+
+**4. Probar fallback (sin API key):**
+```env
+ORACLE_MODE=llm
+GROQ_API_KEY=
+```
+**Response:** `meta.mode: "mock_fallback"` (usa datos predefinidos)
+
+### Validación de Errores
+
+**Signo inválido:**
+```
+POST http://localhost:3000/api/oracle
+Content-Type: application/json
+
+{
+  "sign": "dragon"
+}
+```
+**Response:** `400 - invalid_input`
+
+**Campo faltante:**
+```
+POST http://localhost:3000/api/oracle
+Content-Type: application/json
+
+{}
+```
+**Response:** `400 - invalid_input`
 
 ---
 
@@ -201,7 +286,8 @@ backend/
 │   │   ├── health.controller.js    # Controller de health
 │   │   └── oracle.controller.js    # Controller del oráculo
 │   ├── services/
-│   │   └── oracle.service.js       # Lógica de negocio
+│   │   ├── oracle.service.js       # Lógica de negocio (mock + LLM)
+│   │   └── groq.service.js         # ✨ Integración con Groq API
 │   ├── repositories/
 │   │   └── oracle.repository.js    # Datos mock
 │   ├── models/
@@ -211,12 +297,17 @@ backend/
 │   ├── middlewares/
 │   │   ├── error.middleware.js     # Manejo de errores
 │   │   └── notFound.middleware.js  # Rutas no encontradas
+│   ├── prompts/
+│   │   └── oracle2026.prompt.js    # ✨ Prompts para Groq LLM
 │   ├── utils/
 │   │   ├── response.js             # Helpers de respuesta
 │   │   ├── date.js                 # Helpers de fecha
-│   │   └── strings.js              # Helpers de strings
+│   │   ├── strings.js              # Helpers de strings
+│   │   └── json.js                 # ✨ Extracción de JSON
 │   └── constants/
 │       └── zodiac.js               # Constantes del zodiaco
+├── examples/
+│   └── astrotech-service.js        # Módulo para frontend
 ├── .env.example                    # Template de variables
 ├── .gitignore                      # Archivos ignorados por git
 ├── package.json                    # Dependencias y scripts
@@ -232,15 +323,18 @@ backend/
 - **Middlewares:** CORS, Morgan (HTTP logging)
 - **Configuración:** dotenv
 - **Dev Tools:** nodemon
+- **IA:** Groq SDK (LLM integration) ✨
 
 ---
 
 ## 📝 Notas Importantes
 
-### Fase 1 - Mock Implementation
-- **Actualmente:** Las predicciones son datos mock predefinidos para cada signo.
-- **Próximas fases:** Se integrará Groq AI para generar predicciones dinámicas.
-- **Diseño:** La arquitectura está preparada para reemplazar el repository mock por un servicio de IA sin cambiar el contrato de la API.
+### Fase 3 - Groq AI Integration ✨
+- **Actualmente:** Sistema dual con modo MOCK y modo LLM (Groq AI)
+- **Modo MOCK:** Usa datos predefinidos (sin consumir API, respuesta instantánea)
+- **Modo LLM:** Genera predicciones únicas usando Groq AI con fallback inteligente
+- **Fallback:** Si Groq falla o no hay API key, usa automáticamente datos mock sin romper el servicio
+- **Contrato:** El endpoint `/api/oracle` mantiene el mismo contrato en ambos modos
 
 ### Principios de Desarrollo
 - **Código limpio:** Archivos cortos, responsabilidades claras
@@ -249,6 +343,7 @@ backend/
 - **Validación robusta:** Tolerancia a acentos y variantes de entrada
 - **Manejo de errores centralizado:** Respuestas consistentes
 - **Escalabilidad:** Fácil de extender sin romper contratos
+- **Resiliencia:** Fallback automático si la IA falla
 
 ---
 
@@ -256,7 +351,7 @@ backend/
 
 - [x] **Fase 1:** Backend mock con estructura completa
 - [ ] **Fase 2:** Integración con base de datos (opcional)
-- [ ] **Fase 3:** Integración con Groq AI
+- [x] **Fase 3:** Integración con Groq AI ✨
 - [ ] **Fase 4:** Rate limiting y autenticación
 - [ ] **Fase 5:** Deploy en producción
 

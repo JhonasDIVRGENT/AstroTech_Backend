@@ -1,0 +1,425 @@
+{
+    "info": {
+        "name": "AstroTech Backend API",
+        "description": "Colección de endpoints para AstroTech Backend - Predicciones tecnológicas 2026 by JhonasDev",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Health Check",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:3000/health",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "health"
+                    ]
+                },
+                "description": "Verifica que el servicio esté funcionando correctamente"
+            }
+        },
+        {
+            "name": "Oracle - Aries",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"sign\": \"aries\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:3000/api/oracle",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "api",
+                        "oracle"
+                    ]
+                },
+                "description": "Obtiene predicción tecnológica para Aries"
+            }
+        },
+        {
+            "name": "Oracle - Géminis (con acento)",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"sign\": \"géminis\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:3000/api/oracle",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "api",
+                        "oracle"
+                    ]
+                },
+                "description": "Prueba la normalización de acentos"
+            }
+        },
+        {
+            "name": "Oracle - Leo (mayúsculas)",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"sign\": \"LEO\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:3000/api/oracle",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "api",
+                        "oracle"
+                    ]
+                },
+                "description": "Prueba la normalización de mayúsculas"
+            }
+        },
+        {
+            "name": "Oracle - Error: Signo inválido",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"sign\": \"invalid_sign\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:3000/api/oracle",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "api",
+                        "oracle"
+                    ]
+                },
+                "description": "Prueba validación de signo inválido (debe retornar 400)"
+            }
+        },
+        {
+            "name": "Oracle - Error: Campo faltante",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{}"
+                },
+                "url": {
+                    "raw": "http://localhost:3000/api/oracle",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "api",
+                        "oracle"
+                    ]
+                },
+                "description": "Prueba validación de campo faltante (debe retornar 400)"
+            }
+        },
+        {
+            "name": "Todos los signos - Tauro",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"sign\": \"tauro\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:3000/api/oracle",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "api",
+                        "oracle"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Todos los signos - Cáncer",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"sign\": \"cáncer\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:3000/api/oracle",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "api",
+                        "oracle"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Todos los signos - Virgo",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"sign\": \"virgo\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:3000/api/oracle",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "api",
+                        "oracle"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Todos los signos - Libra",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"sign\": \"libra\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:3000/api/oracle",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "api",
+                        "oracle"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Todos los signos - Escorpio",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"sign\": \"escorpio\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:3000/api/oracle",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "api",
+                        "oracle"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Todos los signos - Sagitario",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"sign\": \"sagitario\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:3000/api/oracle",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "api",
+                        "oracle"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Todos los signos - Capricornio",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"sign\": \"capricornio\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:3000/api/oracle",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "api",
+                        "oracle"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Todos los signos - Acuario",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"sign\": \"acuario\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:3000/api/oracle",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "api",
+                        "oracle"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Todos los signos - Piscis",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"sign\": \"piscis\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:3000/api/oracle",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "api",
+                        "oracle"
+                    ]
+                }
+            }
+        }
+    ]
+}
